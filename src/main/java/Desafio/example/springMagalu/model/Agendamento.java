@@ -20,8 +20,11 @@ public class Agendamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false)
     private String destinatario;
+
+   @Column(nullable = false, columnDefinition = "TEXT")
+   private String mensagem;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -35,5 +38,5 @@ public class Agendamento {
     @Column(nullable = false)
     private StatusAgendamento status;
 
-    private LocalDateTime CriadoEm;
+    private LocalDateTime criadoEm;
 }
