@@ -4,6 +4,7 @@ import Desafio.example.springMagalu.model.Agendamento;
 import Desafio.example.springMagalu.dto.AgendamentoRequestDTO;
 import Desafio.example.springMagalu.dto.AgendamentoResponseDTO;
 import Desafio.example.springMagalu.repository.AgendamentoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,18 @@ public class AgendamentoService {
                 .criadoEm(LocalDateTime.now())
                 .build();
         return toResponse(agendamentoRepository.save(agendamento));
+    }
+
+    public AgendamentoResponseDTO buscarPorId(Long id) {
+        Agendamento agendamento = agendamentoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Agendamento não encontrado"));
+        return toResponse(agendamento);
+    }
+
+    public void remover(Long id) {
+        if (!agendamentoRepository.existsById(id)) {
+            throw new EntityNotFoundException("Agendamento não encontrado!");
+        }
+        agendamentoRepository.deleteById(id);
     }
 
     public AgendamentoResponseDTO toResponse(Agendamento agendamento) {
